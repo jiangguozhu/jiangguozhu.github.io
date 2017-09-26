@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<link href="" rel="stylesheet">
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			li{
+				list-style: none;
+			}
+			#box{
+				width: 1000px;
+				margin: 0 auto;
+			}
+			#box ul li{
+				width: 225px;
+				background: #fff;
+				float: left;
+				padding: 5px;
+				margin: 5px;
+				box-shadow: 0 0 5px #333;
+			}
+			#box ul li img{
+				width: 225px;
+				transition: 1s;
+				opacity: 0;
+				transform: scale(0);
+			}
+		</style>
+	</head>
+	<body>
+	    <div id="box">
+	    	<ul>
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    		<li></li>
+	    	</ul>
+	    </div>
+	    <script src='js/jquery.js'></script>
+	    <script>
+	    	var arr = [
+	    		{src : "img/1.png"},
+	    		{src : "img/2.jpg"},
+	    		{src : "img/3.jpg"},
+	    		{src : "img/4.jpg"},
+	    		{src : "img/5.jpg"},
+	    		{src : "img/6.jpg"},
+	    		{src : "img/7.jpg"},
+	    		{src : "img/8.jpg"},
+	    		{src : "img/9.jpg"},
+	    		{src : "img/10.jpg"},
+	    		{src : "img/11.jpg"},
+	    		{src : "img/12.jpg"}
+	    	];
+
+	    	var i = 0;
+
+	    	function create() {
+	    		var oDiv = document.createElement('div');
+	    		var oImg = new Image();
+	    		oImg.src = arr[i%arr.length].src;
+	    		oDiv.appendChild(oImg);
+	    		getList($('#box ul li')).append(oDiv);
+	    		(function play(oImg){
+					setTimeout(function(){
+						oImg.style.cssText = "opacity:1;transform:scale(1)";
+					},100);
+				})(oImg)
+	    	}
+	    	function getList(obj) {
+	    		var oLi;
+	    		var length = obj.length;
+	    		var h = Infinity;
+	    		for (var i = 0; i < length; i++) {
+	    			if (obj.eq(i).height()<h) {
+	    				h = obj.eq(i).height()
+	    				oLi = obj.eq(i)
+	    			}
+	    		}
+	    		return oLi;
+	    	}
+	    	var sum;
+	    	function upLoad() {
+	    		if (i<12) {
+	    			for (; i < 12; i++) {
+	    				create();
+	    			}
+	    		}else{
+	    			sum = i;
+	    			for (; i < sum+3; i++) {
+	    				create();
+	    			}
+	    		}
+	    	}
+	    	upLoad()
+	    	
+	    	var scrollH = "";
+	    	var scrollT = "";
+	    	$(function () {
+	    		var _height = $(window).height();
+	    		$(window).scroll(function () {
+	    			scrollH = $(document).height();
+	    			scrollT = $(window).scrollTop();
+	    			if (_height+scrollT+50 > scrollH) {
+	    				upLoad()
+	    			}
+	    		});
+	    	});
+	    </script>
+	</body>
+</html>
